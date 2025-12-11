@@ -66,7 +66,7 @@ const ToDoList = () => {
 
   if (loading) {
     return (
-      <div className="bg-black text-white flex justify-center items-center h-screen">
+      <div className="bg-amber-200  text-white flex justify-center items-center h-screen align-middle">
         <h2 className="text-xl font-semibold">Loading...</h2>
       </div>
     );
@@ -74,7 +74,7 @@ const ToDoList = () => {
 
   if (error) {
     return (
-      <div className="bg-black text-white flex justify-center items-center h-screen">
+      <div className="bg-amber-200  text-white flex justify-center items-center h-screen">
         <h2 className="text-xl font-semibold">Error: {error}</h2>
       </div>
     );
@@ -83,14 +83,14 @@ const ToDoList = () => {
 
 
   return (
-    <div className="p-5 m-5 flex flex-col text-align-center">
-      <h1 className="w-100 m-auto text-align-center text-2xl font-bold mb-4 bg-black text-white flex justify-center">To-Do List</h1>
+    <div className="bg-yellow-50 p-10 m-auto w-6xl rounded-lg shadow-2xl flex flex-col text-align-center">
+      <h1 className="w-100 m-auto text-align-center text-2xl font-bold p-2 mb-4 bg-blue-900 rounded-lg text-white flex justify-center">To-Do List</h1>
 
       <div className="flex justify-center gap-2 mb-6">
         <input
           type="text"
-          placeholder="Search ToDoList..."
-          className="border p-2 rounded w-75"
+          placeholder="Search Task..."
+          className="border p-2 rounded w-75 border-blue-900"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -102,8 +102,8 @@ const ToDoList = () => {
         </button>
       </div>
 
-      <div className="w-100 m-auto justify-center max-w-lg bg-green-100 p-5 rounded-lg shadow mb-10">
-        <h2 className="text-xl font-semibold mb-4">Add New Task</h2>
+      <div className="w-100 m-auto justify-center max-w-lg bg-blue-100 p-5 rounded-lg shadow mb-10">
+        <h2 className="text-xl font-semibold mb-4">New Task</h2>
 
         <input
           className="border p-2 w-full rounded mb-3"
@@ -120,16 +120,16 @@ const ToDoList = () => {
         />
 
         <button
-          className="bg-green-600 text-white px-4 py-2 rounded font-semibold w-full"
+          className="bg-blue-600 text-white px-4 py-2 rounded font-semibold w-full"
           onClick={handleCreateToDoLists}
         >
-          Add Task
+          ADD TASK
         </button>
       </div>
 
       <div className="w-full m-auto max-w-4xl">
-        <table className="table-auto w-full border border-gray-300 text-center shadow-lg">
-          <thead className="bg-gray-200">
+        <table className="table-auto w-full border border-blue-300 text-center shadow-lg">
+          <thead className="bg-blue-200">
             <tr>
               <th className="border px-4 py-2">Title</th>
               <th className="border px-4 py-2">Description</th>
