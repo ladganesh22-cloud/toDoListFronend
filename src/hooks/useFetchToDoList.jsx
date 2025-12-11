@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8081/todolists';
+const API_URL = 'https://todolistbackend-yrq1.onrender.com/todolists';
 
 const useFetchToDoList = () => {
   const [toDoList, setToDoList] = useState([]);
