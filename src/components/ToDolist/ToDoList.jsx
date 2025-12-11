@@ -10,6 +10,7 @@ const ToDoList = () => {
   const [description, setDescription] = useState("");
   const [search, setSearch] = useState("");
   const [isSearchMode, setIsSearchMode] = useState(false);
+  const [noResult, setNoResult] = useState(false);
 
   const {
     toDoList,
@@ -42,6 +43,7 @@ const ToDoList = () => {
   const handleSearchToDoLists = async () => {
     console.log("Searching for:", search);
     if (search.trim().length === 0) {
+      setNoResult(false);
       setIsSearchMode(false);
       getAllToDoList();
     }
@@ -53,11 +55,14 @@ const ToDoList = () => {
     );
     console.log("Found List:", foundList);
     if (foundList) {
+      setNoResult(false);
       setIsSearchMode(true);
       await getTODoListsById(foundList._id);
     }
     else {
-      alert("No matching task found!");
+      // alert("No matching task found!");
+      setIsSearchMode(false);
+      setNoResult(true);
     }
   };
 
@@ -140,48 +145,20 @@ const ToDoList = () => {
           </thead>
 
           <tbody>
-            {isSearchMode && singleToDo ? (
-              <tr key={singleToDo._id}>
-                <td className="border px-4 py-2">{singleToDo.title}</td>
-                <td className="border px-4 py-2">{singleToDo.description}</td>
-                <td className="border px-4 py-2">
-                  <select
-                    value={singleToDo.completed}
-                    onChange={(e) => {
-                      const value = e.target.value;
-
-                      const payload = {
-                        completed: value,
-                        feedback: value === "Approved" ? "Good Job" : ""
-                      };
-                      console.log("Updating singleToDo:", singleToDo._id, payload);
-                      updateToDoLists(singleToDo._id, payload);
-                    }}
-                  >
-                    <option value="Rejected">Rejected</option>
-                    <option value="Approved">Approved</option>
-                  </select>
-                </td>
-                <td className="border px-4 py-2">{singleToDo.feedback}</td>
-                <td className="border px-4 py-2">
-                  <button className="bg-red-600 text-white px-3 py-1 rounded"
-                    onClick={async () => {
-                      await deleteToDoLists(singleToDo._id);
-                      setIsSearchMode(false);
-                    }}
-                  >Delete
-                  </button>
+            {noResult ? (
+              <tr>
+                <td colSpan="5" className="text-center py-4 text-red-600 font-semibold">
+                  No result found.
                 </td>
               </tr>
-            ) : toDoList.length > 0 ? (
-              toDoList.map((each) => (
-                <tr key={each._id}>
-                  <td className="border px-4 py-2">{each.title}</td>
-                  <td className="border px-4 py-2">{each.description}</td>
+            ) :
+              isSearchMode && singleToDo ? (
+                <tr key={singleToDo._id}>
+                  <td className="border px-4 py-2">{singleToDo.title}</td>
+                  <td className="border px-4 py-2">{singleToDo.description}</td>
                   <td className="border px-4 py-2">
                     <select
-                      className="border p-1 rounded"
-                      value={each.completed}
+                      value={singleToDo.completed}
                       onChange={(e) => {
                         const value = e.target.value;
 
@@ -189,67 +166,72 @@ const ToDoList = () => {
                           completed: value,
                           feedback: value === "Approved" ? "Good Job" : ""
                         };
-
-                        updateToDoLists(each._id, payload);
+                        console.log("Updating singleToDo:", singleToDo._id, payload);
+                        updateToDoLists(singleToDo._id, payload);
                       }}
                     >
-                      <option value="Pending">Pending</option>
-                      <option value="Approved">Approved</option>
                       <option value="Rejected">Rejected</option>
+                      <option value="Approved">Approved</option>
                     </select>
                   </td>
-                  <td className="border px-4 py-2">{each.feedback}</td>
+                  <td className="border px-4 py-2">{singleToDo.feedback}</td>
                   <td className="border px-4 py-2">
-                    <button
-                      className="bg-red-600 text-white px-3 py-1 rounded"
-                      onClick={() => deleteToDoLists(each._id)}
-                    >
-                      Delete
+                    <button className="bg-red-600 text-white px-3 py-1 rounded"
+                      onClick={async () => {
+                        await deleteToDoLists(singleToDo._id);
+                        setIsSearchMode(false);
+                      }}
+                    >Delete
                     </button>
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="5" className="text-center py-4 text-gray-500">
-                  No To-Do items found.
-                </td>
-              </tr>
-            )}
+              ) : toDoList.length > 0 ? (
+                toDoList.map((each) => (
+                  <tr key={each._id}>
+                    <td className="border px-4 py-2">{each.title}</td>
+                    <td className="border px-4 py-2">{each.description}</td>
+                    <td className="border px-4 py-2">
+                      <select
+                        className="border p-1 rounded"
+                        value={each.completed}
+                        onChange={(e) => {
+                          const value = e.target.value;
+
+                          const payload = {
+                            completed: value,
+                            feedback: value === "Approved" ? "Good Job" : ""
+                          };
+
+                          updateToDoLists(each._id, payload);
+                        }}
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Rejected">Rejected</option>
+                      </select>
+                    </td>
+                    <td className="border px-4 py-2">{each.feedback}</td>
+                    <td className="border px-4 py-2">
+                      <button
+                        className="bg-red-600 text-white px-3 py-1 rounded"
+                        onClick={() => deleteToDoLists(each._id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" className="text-center py-4 text-gray-500">
+                    No To-Do items found.
+                  </td>
+                </tr>
+              )}
           </tbody>
 
         </table>
       </div>
-
-      {/* <input
-        className="border p-2"
-        placeholder="Add title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-
-      <button className="btn bg-yellow-300 text-white font-bold p-5 m-5" onClick={handleCreateToDoLists}>Add</button>
-      <table className="table-auto w-100 border-collapse border border-gray-300">
-        <tbody>
-          {toDoList.map((each) => (
-            <tr key={each._id}>
-              <td>{each.title}</td>
-              <td>
-                <select
-                  value={each.completed}
-                  onChange={(e) => updateToDoLists(each._id, e.target.value)}
-                >
-                  <option value="rejected">Rejected</option>
-                  <option value="Approved">Approved</option>
-                </select>
-              </td>
-              <td>
-                <button onClick={() => deleteToDoLists(each._id)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
     </div>
   );
 };
