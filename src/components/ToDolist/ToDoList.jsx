@@ -64,21 +64,21 @@ const ToDoList = () => {
 
 
 
-  // if (loading) {
-  //   return (
-  //     <div className="bg-black text-white flex justify-center items-center h-screen">
-  //       <h2 className="text-xl font-semibold">Loading...</h2>
-  //     </div>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <div className="bg-black text-white flex justify-center items-center h-screen">
+        <h2 className="text-xl font-semibold">Loading...</h2>
+      </div>
+    );
+  }
 
-  // if (error) {
-  //   return (
-  //     <div className="bg-black text-white flex justify-center items-center h-screen">
-  //       <h2 className="text-xl font-semibold">Error: {error}</h2>
-  //     </div>
-  //   );
-  // }
+  if (error) {
+    return (
+      <div className="bg-black text-white flex justify-center items-center h-screen">
+        <h2 className="text-xl font-semibold">Error: {error}</h2>
+      </div>
+    );
+  }
 
 
 
