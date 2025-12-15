@@ -11,6 +11,16 @@ const ToDoList = () => {
   const [search, setSearch] = useState("");
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [noResult, setNoResult] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+
+  const [editData, setEditData] = useState({
+    _id: "",
+    title: "",
+    description: "",
+    completed: "",
+    feedback: "",
+  });
+
 
   const {
     toDoList,
@@ -66,7 +76,28 @@ const ToDoList = () => {
     }
   };
 
+  const handleEditOpen = (todo) => {
+    setEditData({
+      _id: todo._id,
+      title: todo.title,
+      description: todo.description,
+      completed: todo.completed,
+      feedback: todo.feedback || "",
+    });
+    setIsEditOpen(true);
+  };
 
+  const handleEditSubmit = async () => {
+    const payload = {
+      title: editData.title,
+      description: editData.description,
+      completed: editData.completed,
+      feedback: editData.feedback,
+    };
+
+    await updateToDoLists(editData._id, payload);
+    setIsEditOpen(false);
+  };
 
 
   if (loading) {
@@ -132,7 +163,7 @@ const ToDoList = () => {
         </button>
       </div>
 
-      <div className="w-full m-auto max-w-4xl">
+      <div className="w-full m-auto max-w-6xl">
         <table className="table-auto w-full border border-blue-300 text-center shadow-lg">
           <thead className="bg-blue-200">
             <tr>
@@ -176,6 +207,12 @@ const ToDoList = () => {
                   </td>
                   <td className="border px-4 py-2">{singleToDo.feedback}</td>
                   <td className="border px-4 py-2">
+                    <button
+                      className="bg-green-600 text-white px-3 py-1 rounded mr-2"
+                      onClick={() => handleEditOpen(singleToDo)}
+                    >
+                      Edit
+                    </button>
                     <button className="bg-red-600 text-white px-3 py-1 rounded"
                       onClick={async () => {
                         await deleteToDoLists(singleToDo._id);
@@ -213,6 +250,12 @@ const ToDoList = () => {
                     <td className="border px-4 py-2">{each.feedback}</td>
                     <td className="border px-4 py-2">
                       <button
+                        className="bg-green-600 text-white px-3 py-1 rounded mr-2"
+                        onClick={() => handleEditOpen(each)}
+                      >
+                        Edit
+                      </button>
+                      <button
                         className="bg-red-600 text-white px-3 py-1 rounded"
                         onClick={() => deleteToDoLists(each._id)}
                       >
@@ -231,6 +274,71 @@ const ToDoList = () => {
           </tbody>
 
         </table>
+        {isEditOpen && (
+          <div className="fixed inset-0 bg-amber-400 bg-opacity-50 flex justify-center items-center z-50">
+            <div className="bg-white w-full max-w-lg rounded-lg shadow-xl p-6">
+
+              <h2 className="text-xl font-bold mb-4 text-center text-blue-800">
+                Edit To-Do Task
+              </h2>
+
+              <input
+                className="border p-2 w-full rounded mb-3"
+                placeholder="Title"
+                value={editData.title}
+                onChange={(e) =>
+                  setEditData({ ...editData, title: e.target.value })
+                }
+              />
+
+              <textarea
+                className="border p-2 w-full rounded mb-3"
+                placeholder="Description"
+                value={editData.description}
+                onChange={(e) =>
+                  setEditData({ ...editData, description: e.target.value })
+                }
+              />
+
+              <select
+                className="border p-2 w-full rounded mb-3"
+                value={editData.completed}
+                onChange={(e) =>
+                  setEditData({ ...editData, completed: e.target.value })
+                }
+              >
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+              </select>
+
+              <input
+                className="border p-2 w-full rounded mb-4"
+                placeholder="Feedback"
+                value={editData.feedback}
+                onChange={(e) =>
+                  setEditData({ ...editData, feedback: e.target.value })
+                }
+              />
+
+              <div className="flex justify-end gap-3">
+                <button
+                  className="bg-gray-400 text-white px-4 py-2 rounded"
+                  onClick={() => setIsEditOpen(false)}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  className="bg-blue-600 text-white px-4 py-2 rounded font-semibold"
+                  onClick={handleEditSubmit}
+                >
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
