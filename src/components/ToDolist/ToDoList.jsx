@@ -11,7 +11,7 @@ const ToDoList = () => {
   const [search, setSearch] = useState("");
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [noResult, setNoResult] = useState(false);
-  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [checkEditOpen, setcheckEditOpen] = useState(false);
 
   const [editData, setEditData] = useState({
     _id: "",
@@ -84,7 +84,7 @@ const ToDoList = () => {
       completed: todo.completed,
       feedback: todo.feedback || "",
     });
-    setIsEditOpen(true);
+    setcheckEditOpen(true);
   };
 
   const handleEditSubmit = async () => {
@@ -96,13 +96,13 @@ const ToDoList = () => {
     };
 
     await updateToDoLists(editData._id, payload);
-    setIsEditOpen(false);
+    setcheckEditOpen(false);
   };
 
 
   if (loading) {
     return (
-      <div className="bg-amber-200  text-white flex justify-center items-center h-screen align-middle">
+      <div className="bg-blue-200 text-white flex justify-center items-center h-screen align-middle">
         <h2 className="text-xl font-semibold">Loading...</h2>
       </div>
     );
@@ -110,7 +110,7 @@ const ToDoList = () => {
 
   if (error) {
     return (
-      <div className="bg-amber-200  text-white flex justify-center items-center h-screen">
+      <div className="bg-blue-200  text-white flex justify-center items-center h-screen">
         <h2 className="text-xl font-semibold">Error: {error}</h2>
       </div>
     );
@@ -119,7 +119,7 @@ const ToDoList = () => {
 
 
   return (
-    <div className="bg-yellow-50 p-10 m-auto w-6xl rounded-lg shadow-2xl flex flex-col text-align-center">
+    <div className="bg-blue-50 p-10 m-auto w-6xl rounded-lg shadow-2xl flex flex-col text-align-center">
       <h1 className="w-100 m-auto text-align-center text-2xl font-bold p-2 mb-4 bg-blue-900 rounded-lg text-white flex justify-center">To-Do List</h1>
 
       <div className="flex justify-center gap-2 mb-6">
@@ -208,12 +208,12 @@ const ToDoList = () => {
                   <td className="border px-4 py-2">{singleToDo.feedback}</td>
                   <td className="border px-4 py-2">
                     <button
-                      className="bg-green-600 text-white px-3 py-1 rounded mr-2"
+                      className="bg-blue-900 text-white px-3 py-1 rounded mr-2"
                       onClick={() => handleEditOpen(singleToDo)}
                     >
                       Edit
                     </button>
-                    <button className="bg-red-600 text-white px-3 py-1 rounded"
+                    <button className="bg-red-700 text-white px-3 py-1 rounded"
                       onClick={async () => {
                         await deleteToDoLists(singleToDo._id);
                         setIsSearchMode(false);
@@ -250,13 +250,13 @@ const ToDoList = () => {
                     <td className="border px-4 py-2">{each.feedback}</td>
                     <td className="border px-4 py-2">
                       <button
-                        className="bg-green-600 text-white px-3 py-1 rounded mr-2"
+                        className="bg-blue-900 text-white px-3 py-1 rounded mr-2"
                         onClick={() => handleEditOpen(each)}
                       >
                         Edit
                       </button>
                       <button
-                        className="bg-red-600 text-white px-3 py-1 rounded"
+                        className="bg-red-700 text-white px-3 py-1 rounded"
                         onClick={() => deleteToDoLists(each._id)}
                       >
                         Delete
@@ -274,12 +274,12 @@ const ToDoList = () => {
           </tbody>
 
         </table>
-        {isEditOpen && (
-          <div className="fixed inset-0 bg-amber-400 bg-opacity-50 flex justify-center items-center z-50">
+        {checkEditOpen && (
+          <div className="fixed inset-0 bg-blue-400 bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white w-full max-w-lg rounded-lg shadow-xl p-6">
 
               <h2 className="text-xl font-bold mb-4 text-center text-blue-800">
-                Edit To-Do Task
+                Update Task Section
               </h2>
 
               <input
@@ -324,7 +324,7 @@ const ToDoList = () => {
               <div className="flex justify-end gap-3">
                 <button
                   className="bg-gray-400 text-white px-4 py-2 rounded"
-                  onClick={() => setIsEditOpen(false)}
+                  onClick={() => setcheckEditOpen(false)}
                 >
                   Cancel
                 </button>
