@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import ToDoList from './components/ToDolist/ToDoList.jsx'
-
+import TaskItem from './components/TaskItem/TaskItem.jsx'
 
 
 function App() {
@@ -8,7 +7,7 @@ function App() {
 
   return (
     <>
-      <ToDoList />
+      <TaskItem />
     </>
   )
 }
