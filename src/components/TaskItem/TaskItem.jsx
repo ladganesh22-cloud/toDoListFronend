@@ -330,9 +330,9 @@ const TaskItem = () => {
           </tbody>
         </table>
         {editUpdate && (
-          <div className=" justify-center  items-center z-50 fixed inset-0 bg-blue-400 bg-opacity-50 flex">
+          <div className=" justify-center  items-center z-50 fixed inset-0 bg-green-400 bg-opacity-50 flex">
             <div className=" max-w-lg rounded-lg shadow-xl p-6  bg-white w-full">
-              <h3 className="text-center text-blue-800 text-xl font-bold  mb-4  ">Update Task Dashboard</h3>
+              <h3 className="text-center text-red-800 text-xl font-bold  mb-4  ">Update Task Dashboard</h3>
               {/* Get Task Test Input Elements */}
               <input className="w-full rounded mb-3  border p-2 " placeholder="Task Text...." value={selectTaskData.tasktxt} onChange={(e) => setselectTaskData({ ...selectTaskData, tasktxt: e.target.value })} />
               {/* Get Task Desciption Testarea Elements */}
@@ -348,7 +348,7 @@ const TaskItem = () => {
               {/* Get Task Select Progress Select Options Elements */}
               <div className="flex justify-end gap-3">
                 <button className="bg-gray-400 text-white px-4 py-2 rounded" onClick={() => setEditOpen(false)}>Cancel</button>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded font-semibold" onClick={handleEditSubmit}>Update</button>
+                <button className="bg-green-800 text-white px-4 py-2 rounded font-semibold" onClick={handleEditSubmit}>Update</button>
               </div>
             </div>
           </div>
