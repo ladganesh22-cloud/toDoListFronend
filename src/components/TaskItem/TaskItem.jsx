@@ -11,7 +11,7 @@ const TaskItem = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [nofinding, setNoFinding] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
+  const [editUpdate, setEditOpen] = useState(false);
 
   const [selectTaskData, setselectTaskData] = useState({
     _id: "",
@@ -328,113 +328,27 @@ const TaskItem = () => {
                 </tr>
               )}
           </tbody>
-
         </table>
-        {/* {checkEditOpen && (
-          <div className="fixed inset-0 bg-blue-400 bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white w-full max-w-lg rounded-lg shadow-xl p-6">
-
-              <h2 className="text-xl font-bold mb-4 text-center text-blue-800">
-                Update Task Section
-              </h2>
-
-              <input
-                className="border p-2 w-full rounded mb-3"
-                placeholder="tasktxt"
-                value={editData.tasktxt}
-                onChange={(e) =>
-                  setEditData({ ...editData, tasktxt: e.target.value })
-                }
-              />
-
-              <textarea
-                className="border p-2 w-full rounded mb-3"
-                placeholder="taskdesc"
-                value={editData.taskdesc}
-                onChange={(e) =>
-                  setEditData({ ...editData, taskdesc: e.target.value })
-                }
-              />
-              <div className="flex justify-end gap-3">
-                <button
-                  className="bg-gray-400 text-white px-4 py-2 rounded"
-                  onClick={() => setcheckEditOpen(false)}
-                >
-                  Cancel
-                </button>
-
-                <button
-                  className="bg-blue-600 text-white px-4 py-2 rounded font-semibold"
-                  onClick={handleEditSubmit}
-                >
-                  Update
-                </button>
-              </div>
-            </div>
-          </div>
-        )} */}
-
-        {editOpen && (
-          <div className="fixed inset-0 bg-blue-400 bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white w-full max-w-lg rounded-lg shadow-xl p-6">
-
-              <h2 className="text-xl font-bold mb-4 text-center text-blue-800">
-                Update Task Section
-              </h2>
-
-              <input
-                className="border p-2 w-full rounded mb-3"
-                placeholder="tasktxt"
-                value={selectTaskData.tasktxt}
-                onChange={(e) =>
-                  setselectTaskData({ ...selectTaskData, tasktxt: e.target.value })
-                }
-              />
-
-              <textarea
-                className="border p-2 w-full rounded mb-3"
-                placeholder="taskdesc"
-                value={selectTaskData.taskdesc}
-                onChange={(e) =>
-                  setselectTaskData({ ...selectTaskData, taskdesc: e.target.value })
-                }
-              />
-
-              <select
-                className="border p-2 w-full rounded mb-3"
-                value={selectTaskData.completed}
-                onChange={(e) =>
-                  setselectTaskData({ ...selectTaskData, completed: e.target.value })
-                }
-              >
+        {editUpdate && (
+          <div className=" justify-center  items-center z-50 fixed inset-0 bg-blue-400 bg-opacity-50 flex">
+            <div className=" max-w-lg rounded-lg shadow-xl p-6  bg-white w-full">
+              <h3 className="text-center text-blue-800 text-xl font-bold  mb-4  ">Update Task Dashboard</h3>
+              {/* Get Task Test Input Elements */}
+              <input className="w-full rounded mb-3  border p-2 " placeholder="Task Text...." value={selectTaskData.tasktxt} onChange={(e) => setselectTaskData({ ...selectTaskData, tasktxt: e.target.value })} />
+              {/* Get Task Desciption Testarea Elements */}
+              <textarea className="w-full rounded mb-3 border p-2 " placeholder="Task Description....." value={selectTaskData.taskdesc} onChange={(e) => setselectTaskData({ ...selectTaskData, taskdesc: e.target.value })} />
+              {/* Get Task Select Progress Select Options Elements */}
+              <select className="mb-3  border p-2 w-full rounded " value={selectTaskData.completed} onChange={(e) => setselectTaskData({ ...selectTaskData, completed: e.target.value })}>
                 <option value="Pending">Pending</option>
                 <option value="Approved">Approved</option>
                 <option value="Rejected">Rejected</option>
               </select>
-
-              <input
-                className="border p-2 w-full rounded mb-4"
-                placeholder="Feedback"
-                value={selectTaskData.feedback}
-                onChange={(e) =>
-                  setselectTaskData({ ...selectTaskData, feedback: e.target.value })
-                }
-              />
-
+              {/* Get Task Select Progress Select Options Elements */}
+              <input className="border p-2 w-full rounded mb-4" placeholder="Task Feedback ...." value={selectTaskData.feedback} onChange={(e) => setselectTaskData({ ...selectTaskData, feedback: e.target.value })} />
+              {/* Get Task Select Progress Select Options Elements */}
               <div className="flex justify-end gap-3">
-                <button
-                  className="bg-gray-400 text-white px-4 py-2 rounded"
-                  onClick={() => setEditOpen(false)}
-                >
-                  Cancel
-                </button>
-
-                <button
-                  className="bg-blue-600 text-white px-4 py-2 rounded font-semibold"
-                  onClick={handleEditSubmit}
-                >
-                  Update
-                </button>
+                <button className="bg-gray-400 text-white px-4 py-2 rounded" onClick={() => setEditOpen(false)}>Cancel</button>
+                <button className="bg-blue-600 text-white px-4 py-2 rounded font-semibold" onClick={handleEditSubmit}>Update</button>
               </div>
             </div>
           </div>
